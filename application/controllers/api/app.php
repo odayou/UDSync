@@ -20,8 +20,8 @@ class App extends CI_Controller
 	{
 		if( !$admin || !$password || !$domain || !$app_key) //Verify value is exist
 		{
-			echo $this->json->create_message('1','Value error'); //Returned an error message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('1','Value error'));//Returned an error message
+			$this->load->view('api/json_view',$data); //Load view file
 		}
 
 		$this->load->model('User_data'); //Load user model
@@ -30,11 +30,11 @@ class App extends CI_Controller
 
 		if( $this->User_data->user_login( $admin , $password ) == 1 && $this->Admins_data->admin_instauth( $admin , $password ) == 1 && $this->Application_data->install_app( $domain , $app_key ) == 1 ) //Verify admin access
 		{
-			echo $this->json->create_message('0','Suceess'); //Returned success message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('0','Success'));//Returned an success message
+			$this->load->view('api/json_view',$data); //Load view file
 		} else {
-			echo $this->json->create_message('2','No enough access or App is exist'); //Returned an error message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('2','No enough access or App is exist'));//Returned error message,Status code is 2
+			$this->load->view('api/json_view',$data); //Load view file
 		}
 	}
 }

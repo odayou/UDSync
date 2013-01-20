@@ -19,8 +19,8 @@ Class User extends CI_Controller
 	{
 		if( !$id || !$password || !$user_ipadress || !$user_agent || !$appid || !$appkey) //Verify value is exist
 		{
-			echo $this->json->create_message('1','Value error'); //Returned an error message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('1','Value error'));//Returned an error message
+			$this->load->view('api/json_view',$data); //Load view file
 		}
 
 		$this->load->model('Application_data'); //Load application model
@@ -31,17 +31,17 @@ Class User extends CI_Controller
 		{
 		if($this->User_data->user_login( $id , $password ) == 1 ) //Access database
 		{
-			echo $this->json->create_message('0','Login success'); //Returned a success message
+			$data = array('json' => $this->json->create_message('0','Login success'));//Returned an success message
+			$this->load->view('api/json_view',$data); //Load view file
 			$this->Session_data->create_session( $id , $user_ipadress , $user_agent);
 			//echo sha1($this->input->ip_address().$this->input->user_agent());
-			exit; //Stop script running
 		} else {
-			echo $this->json->create_message('2','Login faild'); //Returned a faild message,Status code is 2
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('2','Login faild'));//Returned a faild message,Status code is 2
+			$this->load->view('api/json_view',$data); //Load view file
 		}
 		} else {
-			echo $this->json->create_message('3','Unauthorized access'); //Returned unauthorized error
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('3','Unauthorized access'));//Returned unauthorized error
+			$this->load->view('api/json_view',$data);//Load view file
 		}
 	}
 
@@ -49,8 +49,8 @@ Class User extends CI_Controller
 	{
 		if( !$id || !$appid || !$appkey ) //Verify value is exist
 		{
-			echo $this->json->create_message('1','Value error'); //Returned an error message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('1','Value error'));//Returned an error message
+			$this->load->view('api/json_view',$data);//Load view file
 		}
 
 		$this->load->model('Application_data'); //Load application model
@@ -59,11 +59,11 @@ Class User extends CI_Controller
 		if( $this->Application_data->match_app( $appid , $appkey ) == 1 ) //Make sure request was sent by registered client
 		{
 			$this->Session_data->destroy_session( $id ); //Destroy session
-			echo $this->json->create_message('0','Session destroyed'); //Returned success message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('0','Session destroyed'));//Returned success message
+			$this->load->view('api/json_view',$data);//Load view file
 		} else {
-			echo $this->json->create_message('3','Unauthorized access'); //Returned unauthorized error
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('3','Unauthorized access'));//Returned unauthorized error
+			$this->load->view('api/json_view',$data);//Load view file
 		}
 	}
 
@@ -71,8 +71,8 @@ Class User extends CI_Controller
 	{
 		if( !$id || !$email || !$password || !$appid || !$appkey ) //Verify value is exist
 		{
-			echo $this->json->create_message('1','Value error'); //Returned an error message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('1','Value error'));//Returned an error message
+			$this->load->view('api/json_view',$data);//Load view file
 		}
 
 		$this->load->model('User_data'); //Load user model
@@ -82,15 +82,15 @@ Class User extends CI_Controller
 		{
 		if( $this->User_data->user_register( $id , urldecode($email) , $password ) !== FALSE ) //Verify return is TURE
 		{
-			echo $this->json->create_message('0','Register success'); //Returned success message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('0','Register success'));//Returned an success message
+			$this->load->view('api/json_view',$data); //Load view file
 		} else {
-			echo $this->json->create_message('2','User already exist'); //Returned an error message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('2','User already exist'));//Returned error message,Status code is 2
+			$this->load->view('api/json_view',$data); //Load view file
 		}
 		} else {
-			echo $this->json->create_message('3','Unauthorized access'); //Returned unauthorized error
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('3','Unauthorized access'));//Returned unauthorized error
+			$this->load->view('api/json_view',$data);//Load view file
 		}
 	}
 }

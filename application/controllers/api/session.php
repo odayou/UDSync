@@ -20,8 +20,8 @@ class Session extends CI_Controller
 	{
 		if( !$hash || !$appid || !$appkey) //Verify value is exist
 		{
-			echo $this->json->create_message('1','Value error'); //Returned an error message
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('1','Value error'));//Returned an error message
+			$this->load->view('api/json_view',$data); //Load view file
 		}
 
 		$this->load->model('Application_data'); //Load application model
@@ -33,15 +33,15 @@ class Session extends CI_Controller
 
 		if( $this->Session_data->match_session( $hash ) == FALSE )
 		{
-			echo $this->json->create_message('2','No match'); //Returned level 2 message(other)
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('2','No match'));//Returned level 2 message(other)
+			$this->load->view('api/json_view',$data); //Load view file
 		} else {
-			echo $this->json->create_message('0',$match);
-			exit; //Stop script running
+			$data = array('json' => $this->json->create_message('0',$match));//Returned level 2 message(other)
+			$this->load->view('api/json_view',$data); //Load view file
 		}	
 		} else {
 			echo $this->json->create_message('3','Unauthorized access'); //Returned unauthorized error
-			exit; //Stop script running
+			$this->load->view('api/json_view',$data); //Load view file
 		}
 	}
 }
