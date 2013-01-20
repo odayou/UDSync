@@ -40,7 +40,7 @@ class Session extends CI_Controller
 			$this->load->view('api/json_view',$data); //Load view file
 		}	
 		} else {
-			echo $this->json->create_message('3','Unauthorized access'); //Returned unauthorized error
+			$data = array('json' => $this->json->create_message('3','Unauthorized access'));//Returned unauthorized error
 			$this->load->view('api/json_view',$data); //Load view file
 		}
 	}
