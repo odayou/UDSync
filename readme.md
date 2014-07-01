@@ -15,3 +15,5 @@ UDSync(User Data Sync) is an user data sync center by CodeIgniter and Restful se
 >   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 >   See the License for the specific language governing permissions and
 >   limitations under the License.
+
+>  you can use wiki by here:https://github.com/a20968/UDSync.wiki.git
